@@ -1,0 +1,147 @@
+### 查询任务详细信息
+GET http://localhost:8080/task/info?id=928fa44d-f0b3-11e9-bbd6-e6029b62e32d
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJ1c2VyXzEiLCJzY29wZSI6WyJzZXJ2ZXIiXSwiZXhwIjoxNTY3NTI5OTg3LCJqdGkiOiJiMWNjOThiMy0wY2Q4LTRmMTUtYWJkYi1jZGU5NzhmM2ZiN2IiLCJjbGllbnRfaWQiOiJjbGllbnRfMiJ9.FmydWDBvJ20wG73gRtjA_GaZG-cJ3pvj_SkBbc10iJg
+### 查询任务列表信息
+POST http://localhost:8080/task/list
+Content-Type: application/json
+X-UserInfo-UserId: 1227
+X-UserInfo-Username: alan
+
+{
+  "keyWord": "",
+  "definitionId":"",
+  "definitionCode": "stock-lock-apply",
+  "begin": "",
+  "end": "",
+  "status": [],
+  "pageNum": 1
+}
+
+### 采购单详情
+GET http://localhost:8080/mp/purchase/detail?orderNumber=&taskId=
+X-UserInfo-UserId: 1
+X-UserInfo-Username: 7311
+
+###
+GET http://localhost:8080/mp/purchase/instance?orderNumber=SPO2017110700056&instanceId=6b175ffd-e109-11e9-91eb-e6029b62e32d
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+### 任务提交
+POST http://localhost:8080/task/submit
+Content-Type: application/json
+X-UserInfo-UserId: 7442
+X-UserInfo-Username: qingt
+
+{
+    "id":"889ec907-0d00-11ea-9b48-7c67a285606a",
+    "formData":[
+        {
+            "name": "approved",
+            "value": 1
+        }
+    ]
+}
+
+### 批量提交
+POST http://localhost:8080/task/submits
+Content-Type: application/json
+X-UserInfo-UserId: 7311
+X-UserInfo-Username: qingt
+
+{
+    "ids":[
+    "9b34cbe1-0163-11ea-b642-e6029b62e32d",
+    "98ac4c04-0163-11ea-b642-e6029b62e32d",
+    "9556e037-0163-11ea-b642-e6029b62e32d",
+    "92413b8a-0163-11ea-b642-e6029b62e32d",
+    "8f7c9d0d-0163-11ea-b642-e6029b62e32d",
+    "8c22c370-0163-11ea-b642-e6029b62e32d",
+    "891becd3-0163-11ea-b642-e6029b62e32d",
+    "85f1aeb6-0163-11ea-b642-e6029b62e32d",
+    "82f3d7c9-0163-11ea-b642-e6029b62e32d",
+    "8059568c-0163-11ea-b642-e6029b62e32d",
+    "7cbea45f-0163-11ea-b642-e6029b62e32d",
+    "77621cf2-0163-11ea-b642-e6029b62e32d"
+    ],
+    "approvalValue":1
+}
+
+###
+GET http://localhost:8080/timeout/timer
+X-UserInfo-UserId: 7311
+X-UserInfo-Username: qingt
+
+
+### 问题处理任务提交  0
+POST http://localhost:8080/task/submit
+Content-Type: application/json
+X-UserInfo-UserId: 7474
+X-UserInfo-Username: xuhaoxiang
+
+{
+"id":"38b4092d-1740-11ea-8a04-005056c00008",
+"formData":[
+{
+"name": "disposed",
+"value": 0
+},{
+    "name": "expectedresolobj",
+    "value": "83:7474"
+  }
+]
+}
+### 问题处理任务提交  1
+POST http://localhost:8080/task/submit
+Content-Type: application/json
+X-UserInfo-UserId: 7474
+X-UserInfo-Username: xuhaoxiang
+
+{
+  "id":"63b8ee60-17fd-11ea-94e2-005056c00008",
+  "formData":[
+    {
+      "name": "disposed",
+      "value": 1
+    }
+  ]
+}
+### 问题处理任务转交  1
+POST http://localhost:8080/task/transfer
+Content-Type: application/json
+X-UserInfo-UserId: 7474
+X-UserInfo-Username: xuhaoxiang
+
+{
+  "id":"edcaefdd-1725-11ea-b45f-005056c00008",
+  "userId":[
+    7474
+  ]
+}
+###申请人确认解决开始操作
+POST http://localhost:8080/task/begin
+Content-Type: application/json
+X-UserInfo-UserId: 7474
+X-UserInfo-Username: xuhaoxiang
+
+{
+  "taskId":"c9a71478-287b-11ea-b463-e6029b62e32d"
+}
+###申请人确认解决   1或0
+POST http://localhost:8080/task/submit
+Content-Type: application/json
+X-UserInfo-UserId: 7474
+X-UserInfo-Username: xuhaoxiang
+
+{
+  "id":"c9a71478-287b-11ea-b463-e6029b62e32d",
+  "formData":[
+    {
+      "name": "taskStatus",
+      "value": 3
+    }
+  ]
+}
+###

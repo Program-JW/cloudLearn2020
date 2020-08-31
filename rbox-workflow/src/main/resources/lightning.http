@@ -1,0 +1,161 @@
+### 新建
+POST http://localhost:9019/lightning-issue/submit
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1115
+X-UserInfo-Username: alan
+
+{
+        "categoryId":2,
+        "description":"测试事务失效问题1",
+        "expectedSolver":[1227],
+        "attachments":["/workflow/lightning/ab2167cb-672f-49bc-a007-1a76b01941e3.png","/workflow/lightning/835dd6df-6df4-42e6-abf3-abe9965fedbd.png"]
+}
+
+#### 查询详情接口 开始受理
+GET http://localhost:9019/lightning-issue/11282
+X-UserInfo-UserId: 1393
+X-UserInfo-Username: liqingtian
+
+### 交接
+POST http://localhost:9019/lightning-issue/transfer
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1227
+X-UserInfo-Username: liqingtian
+
+{
+        "issueId":11282,
+        "taskId":"860bf383-89d9-11ea-8db3-e6029b62e32d",
+        "assigneeId":1393
+}
+### 详情
+
+
+
+### 确认未解决
+
+
+### 查询我受理列表
+GET http://localhost:9019/lightning-issue/my-acceptance?page=0&size=-1&run=1
+X-UserInfo-UserId: 1227
+X-UserInfo-Username: liqingtian
+
+### 查询我受理列表
+GET http://localhost:9019/lightning-issue/my-acceptance?page=0&size=-1&run=1
+X-UserInfo-UserId: 772
+X-UserInfo-Username: zhouwei
+
+### 清除缓存
+DELETE http://localhost:9019/lightning-issue/my-acceptance-id/cache?userIds=772
+X-UserInfo-UserId: 1227
+X-UserInfo-Username: liqingtian
+
+### 清除缓存
+GET http://localhost:9019/userInfo/init
+X-UserInfo-UserId: 1227
+X-UserInfo-Username: liqingtian
+
+### 查询我受理测试环境
+GET http://test.rbwkfw.ruigushop.com/lightning-issue/my-acceptance
+X-UserInfo-UserId: 1227
+X-UserInfo-Username: liqingtian
+
+### 查询我提交列表
+GET http://localhost:9019/lightning-issue/my-submitted?page=0&size=-1&run=
+X-UserInfo-UserId: 1227
+X-UserInfo-Username: alan
+
+### 查询我提交列表
+GET http://localhost:9019/lightning-issue/leader-overtime?page=0&size=10&run=0
+X-UserInfo-UserId: 958
+X-UserInfo-Username: alan
+
+### 超时
+GET http://localhost:9019/timeout/lightning
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 7311
+X-UserInfo-Username: liqingtian
+
+### 撤销
+POST http://localhost:9019/lightning-issue/revoke
+X-UserInfo-UserId: 1115
+X-UserInfo-Username: liqingtian
+Content-Type: application/json
+
+{
+    "revokeIssueList": [{
+        "issueId":11278,
+        "revokeReason":"测试撤销"
+    }]
+}
+
+### 催办
+GET http://localhost:8080/lightning-issue/urge/21
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 7311
+X-UserInfo-Username: liqingtian
+
+###
+GET http://localhost:8097/data/socket
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 7311
+X-UserInfo-Username: liqingtian
+
+### 未读
+POST http://localhost:8080/lightning-issue/unread/notice
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 7311
+X-UserInfo-Username: liqingtian
+Content-Type: application/json
+
+{
+    "groupId":535010445140992000,
+    "userId":7477
+}
+
+###开发通讯录
+GET http://localhost:9019/lightning-issue/departmentAndEmployee?positionList=CM,AM&groupId=12&isFilterTheGeneralManager=false&roleCode=lightningChain:IssueAssignee
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 7311
+X-UserInfo-Username: liqingtian
+
+###
+POST http://localhost:9019/lightning-issue/addUser
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1227
+X-UserInfo-Username: liqingtian
+Content-Type: application/json
+
+{
+    "issueId":240,
+    "userId":1227
+}
+
+###
+POST http://localhost:9019/lightning-issue/resubmit
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1463
+X-UserInfo-Username: liqingtian
+Content-Type: application/json
+
+{
+    "issueId":324
+}
+
+###
+
+POST http://localhost:9019/lightning-issue/finish
+Content-Type: application/json
+X-UserInfo-UserId: 1393
+X-UserInfo-Username: leo
+
+{
+	"demand": false,
+	"issueDepartmentId": 18,
+	"issueId": 11282,
+	"issueReason": "已解决",
+	"taskId": "10db8905-89da-11ea-8db3-e6029b62e32d"
+}
+
+###

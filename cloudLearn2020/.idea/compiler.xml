@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <option name="USE_RELEASE_OPTION" value="false" />
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="demo-zuul" />
+        <module name="demo2" />
+        <module name="demo2-copy" />
+        <module name="demo-feign" />
+        <module name="cloud-eureka-server7001" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="8">
+      <module name="demo" target="1.8" />
+      <module name="demo-client" target="1.8" />
+      <module name="demo-gateway" target="1.8" />
+      <module name="demo-server" target="1.8" />
+      <module name="eureak-server" target="1.8" />
+      <module name="eureka-server" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="demo" options="-parameters" />
+      <module name="demo-client" options="" />
+      <module name="demo-feign" options="-parameters" />
+      <module name="demo-gateway" options="-parameters" />
+      <module name="demo-server" options="" />
+      <module name="demo-zuul" options="-parameters" />
+      <module name="demo2" options="-parameters" />
+      <module name="demo2-copy" options="-parameters" />
+      <module name="eureak-server" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
+    </option>
+  </component>
+</project>

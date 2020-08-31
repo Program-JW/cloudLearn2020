@@ -1,0 +1,33 @@
+### 任务一级评论
+GET https://dev.nagy.ruigushop.com/workflow/task/comment?taskId=7483f70f-c88d-11e9-94c0-e6029b62e32d
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJ1c2VyXzEiLCJzY29wZSI6WyJzZXJ2ZXIiXSwiZXhwIjoxNTY3NTI5OTg3LCJqdGkiOiJiMWNjOThiMy0wY2Q4LTRmMTUtYWJkYi1jZGU5NzhmM2ZiN2IiLCJjbGllbnRfaWQiOiJjbGllbnRfMiJ9.FmydWDBvJ20wG73gRtjA_GaZG-cJ3pvj_SkBbc10iJg
+
+### 任务二级评论
+GET http://localhost:1987/task/comment/second/1
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJ1c2VyXzEiLCJzY29wZSI6WyJzZXJ2ZXIiXSwiZXhwIjoxNTY3NTI5OTg3LCJqdGkiOiJiMWNjOThiMy0wY2Q4LTRmMTUtYWJkYi1jZGU5NzhmM2ZiN2IiLCJjbGllbnRfaWQiOiJjbGllbnRfMiJ9.FmydWDBvJ20wG73gRtjA_GaZG-cJ3pvj_SkBbc10iJg
+
+### 任务新增
+POST http://localhost:1987/task/comment/add
+Content-Type: application/json
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJ1c2VyXzEiLCJzY29wZSI6WyJzZXJ2ZXIiXSwiZXhwIjoxNTY3NTI5OTg3LCJqdGkiOiJiMWNjOThiMy0wY2Q4LTRmMTUtYWJkYi1jZGU5NzhmM2ZiN2IiLCJjbGllbnRfaWQiOiJjbGllbnRfMiJ9.FmydWDBvJ20wG73gRtjA_GaZG-cJ3pvj_SkBbc10iJg
+
+{
+    "content": "测试新增评论1",
+    "parentId": "0",
+    "createdBy": "1",
+    "taskId": "7483f70f-c88d-11e9-94c0-e6029b62e32d"
+}
+
+### 任务删除
+POST http://localhost:1987/task/comment/delete/4
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJ1c2VyXzEiLCJzY29wZSI6WyJzZXJ2ZXIiXSwiZXhwIjoxNTY3NTI5OTg3LCJqdGkiOiJiMWNjOThiMy0wY2Q4LTRmMTUtYWJkYi1jZGU5NzhmM2ZiN2IiLCJjbGllbnRfaWQiOiJjbGllbnRfMiJ9.FmydWDBvJ20wG73gRtjA_GaZG-cJ3pvj_SkBbc10iJg
+
+###

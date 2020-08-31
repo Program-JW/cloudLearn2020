@@ -1,0 +1,83 @@
+### 测试环境 新建
+POST http://test.rbwkfw.ruigushop.com/lightning-issue/submit
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1115
+X-UserInfo-Username: alan
+
+{
+        "categoryId":2,
+        "description":"测试通讯录2",
+        "expectedSolver":[1227],
+        "attachments":["https://static.ruigushop.com/bpos/shopHead/afc801cb-f10b-4570-b1f8-3157cb3d0ebe"]
+}
+
+### 测试环境 我受理列表
+GET http://test.rbwkfw.ruigushop.com/lightning-issue/my-acceptance
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 870
+X-UserInfo-Username: liyiran
+
+### 测试环境 我受理列表
+GET http://test.rbwkfw.ruigushop.com/lightning-issue/my-submitted?isRunning=false&page=0&size=-1
+X-UserInfo-UserId: 1393
+X-UserInfo-Username: liyiran
+
+### 测试环境 问题详情
+GET http://test.rbwkfw.ruigushop.com/lightning-issue/512
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 958
+X-UserInfo-Username: leo
+
+### 测试环境 交接受理人
+POST http://test.rbwkfw.ruigushop.com/lightning-issue/transfer
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1115
+X-UserInfo-Username: alan
+
+{
+	"assigneeId": 1393,
+	"issueId": 33,
+	"taskId": "c6bf9bae-3870-11ea-83e2-c6dd47ac8767"
+}
+
+### 测试环境 已解决
+POST http://test.rbwkfw.ruigushop.com/lightning-issue/finish
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 958
+X-UserInfo-Username: leo
+
+{
+	"demand": false,
+	"issueDepartmentId": 18,
+	"issueId": 512,
+	"issueReason": "已解决",
+	"taskId": "4aef22b3-68fa-11ea-9392-005056b80d80"
+}
+
+### 测试环境 申请人确认已解决或未解决
+POST http://test.rbwkfw.ruigushop.com/lightning-issue/confirm?issueId=32&resolved=true
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1227
+X-UserInfo-Username: liqingtian
+
+### 测试环境 撤销
+POST http://test.rbwkfw.ruigushop.com/lightning-issue/revoke
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+Content-Type: application/json
+X-UserInfo-UserId: 1227
+X-UserInfo-Username: liqingtian
+
+{
+	"revokeIssueList": [
+		{
+			"instanceId": "97569e1b-3870-11ea-83e2-c6dd47ac8767",
+			"issueId": 33,
+			"revokeReason": "撤销测试"
+		}
+	]
+}
+
+###

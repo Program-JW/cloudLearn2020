@@ -1,0 +1,123 @@
+### 启动实例
+POST http://127.0.0.1:8109/instance/start
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+  "key": "9eda70df-ca1c-4414-8b22-993b04356562",
+  "businessKey": "456",
+  "name": ""
+}
+
+###暂停实例
+POST http://127.0.0.1:8109/instance/suspend
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+        "lastUpdatedBy": 1,
+        "createdOn": "2019-08-22 11:40:33",
+        "definitionVersion": 1,
+        "createdBy": 1,
+        "name": "工单处理",
+        "businessKey": "456",
+        "definitionCode": "eaa18be9-a4e6-4a3c-a3d7-5e400add7173",
+        "lastUpdatedOn": "2019-08-22 11:40:33",
+        "startTime": "2019-08-22 11:40:33",
+        "id": "985814b6-c48e-11e9-b2ce-a0510b6d2db1",
+        "endTime": null,
+        "definitionId": "3b385beb-c48e-11e9-b2ce-a0510b6d2db1",
+        "status": 2
+      }
+
+
+###激活实例
+POST http://127.0.0.1:8109/instance/activate
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+        "lastUpdatedBy": 1,
+        "createdOn": "2019-08-22 11:40:33",
+        "definitionVersion": 1,
+        "createdBy": 1,
+        "name": "工单处理",
+        "businessKey": "456",
+        "definitionCode": "eaa18be9-a4e6-4a3c-a3d7-5e400add7173",
+        "lastUpdatedOn": "2019-08-22 11:40:33",
+        "startTime": "2019-08-22 11:40:33",
+        "id": "985814b6-c48e-11e9-b2ce-a0510b6d2db1",
+        "endTime": null,
+        "definitionId": "3b385beb-c48e-11e9-b2ce-a0510b6d2db1",
+        "status": 1
+      }
+
+###删除实例
+POST http://127.0.0.1:8109/instance/delete
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+        "instanceId":"985814b6-c48e-11e9-b2ce-a0510b6d2db1",
+        "deleteReason":"测试删除！"
+}
+
+###分页查询实例
+GET http://127.0.0.1:8080/instance/my/submit/list?pageIndex=0&pageSize=10&history=1
+Content-Type: application/x-www-form-urlencoded
+X-UserInfo-UserId: 1227
+X-UserInfo-Username: alan
+
+###库存变成流程启动
+POST http://127.0.0.1:8080/instance/
+
+###撤销
+POST http://127.0.0.1:8080/instance/revoke/id
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+    "instanceId":"d8f365d8-008d-11ea-8094-e6029b62e32d",
+    "operationUserId":"7311"
+}
+
+###发送信号测试
+POST http://localhost:8080/instance/question/confirm
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+    "instanceId":"c99e61db-287b-11ea-b463-e6029b62e32d",
+    "variables":{
+        "taskStatus":4
+    }
+}
+
+###
+POST http://localhost:8080/lightning-issue/submit
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 7224
+X-UserInfo-Username: alan
+
+{
+        "title":"金币没返咋回事啊",
+        "categoryId":2,
+        "description":"金币没返没返",
+        "expectedSolver":[7311],
+        "attachments":["http://image.ruigushop.com/upload/others/1809/15382689511616067.jpg!t400","https://static.ruigushop.com/bpos/shopHead/afc801cb-f10b-4570-b1f8-3157cb3d0ebe"]
+}
+
+###

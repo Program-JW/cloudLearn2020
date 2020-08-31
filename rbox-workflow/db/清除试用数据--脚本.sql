@@ -1,0 +1,13 @@
+delete from lightning_issue_apply where 1=1;
+delete from lightning_issue_category  where 1=1;
+delete from lightning_issue_evaluation  where 1=1;
+delete from lightning_issue_group  where 1=1;
+delete from lightning_issue_log  where 1=1;
+delete from lightning_issue_relevant_user  where 1=1;
+delete from ws_api_log  where 1=1;
+delete from rabbitmq_msg  where 1=1;
+delete from task where model_id='6b8a8499-3a86-11ea-9d83-525400b5434e';
+delete from workflow_history where definition_id='6b8a8499-3a86-11ea-9d83-525400b5434e';
+delete from workflow_instance where definition_id='6b8a8499-3a86-11ea-9d83-525400b5434e';
+delete from notice where definition_id='6b8a8499-3a86-11ea-9d83-525400b5434e';
+delete from operation_log where definition_id='6b8a8499-3a86-11ea-9d83-525400b5434e';

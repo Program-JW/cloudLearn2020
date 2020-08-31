@@ -1,0 +1,75 @@
+### 用户组创建
+POST https://dev.nagy.ruigushop.com/workflow/user/group/add
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJ1c2VyXzEiLCJzY29wZSI6WyJzZXJ2ZXIiXSwiZXhwIjoxNTY3NTY3NDE3LCJqdGkiOiIyZGVhMmU1ZC04YWY2LTQ0ZjYtODMyYi1mNjY2YmVkMWVhMDUiLCJjbGllbnRfaWQiOiJjbGllbnRfMiJ9.FwFh7toQKgwXyOLwxNUSy2NqpoBoFvHHO6UkKa02hL8
+
+{
+    "name": "4",
+    "remark": "4",
+    "status": "5"
+}
+
+### 展示用户组
+GET http://localhost:8109/user/groups?pageIndex=1&pageSize=10
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+### 展示用户组用户
+GET http://localhost:8080/user/group/1?pageIndex=1&pageSize=10
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+
+### 展示用户组详细信息
+GET http://localhost:8109/user/group/info/1
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+### 修改用户组
+POST http://localhost:8109/user/group/edit
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+Content-Type: application/json
+
+{
+    "id": 3,
+    "name": "新增用户组3",
+    "remark": "描述3-修改后",
+    "status": 1
+}
+
+### 删除用户组
+POST http://localhost:8109/user/group/remove
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+Content-Type: application/json
+
+{
+    "id":3
+}
+
+### 向用户组添加用户
+POST http://localhost:8109/user/group/adduser
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+Content-Type: application/json
+
+{
+    "groupId":3,
+    "userId": 1
+}
+
+### 删除用户组用户
+POST http://localhost:8109/user/group/removeuser
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+Content-Type: application/json
+
+{
+    "groupId":3,
+    "userId": 1
+}
+
+###

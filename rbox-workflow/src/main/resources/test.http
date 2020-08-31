@@ -1,0 +1,456 @@
+### 创建草稿
+POST http://127.0.0.1:8109/definition/create-draft
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+  "name": "工单处理",
+  "description": "工单处理",
+  "graph": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:activiti=\"http://activiti.org/bpmn\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:omgdc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:omgdi=\"http://www.omg.org/spec/DD/20100524/DI\" typeLanguage=\"http://www.w3.org/2001/XMLSchema\" expressionLanguage=\"http://www.w3.org/1999/XPath\" targetNamespace=\"http://www.activiti.org/processdef\">   <process id=\"work-order\" name=\"工单处理\" isExecutable=\"true\">     <documentation>工单处理</documentation>     <startEvent id=\"startEvent1\"></startEvent>     <userTask id=\"sid-ED401A6C-3B36-4470-9642-846666812DE9\" name=\"处理工单\"></userTask>     <sequenceFlow id=\"sid-1DFCEDF9-9141-45B6-BC63-A5192DDFDEB3\" sourceRef=\"startEvent1\" targetRef=\"sid-ED401A6C-3B36-4470-9642-846666812DE9\"></sequenceFlow>     <endEvent id=\"sid-01242217-9F9A-4ADC-8908-1CAA455D78C2\"></endEvent>     <sequenceFlow id=\"sid-2A9F6FC6-97D3-460B-B419-2705FA703659\" sourceRef=\"sid-ED401A6C-3B36-4470-9642-846666812DE9\" targetRef=\"sid-01242217-9F9A-4ADC-8908-1CAA455D78C2\"></sequenceFlow>   </process>   <bpmndi:BPMNDiagram id=\"BPMNDiagram_work-order\">     <bpmndi:BPMNPlane bpmnElement=\"work-order\" id=\"BPMNPlane_work-order\">       <bpmndi:BPMNShape bpmnElement=\"startEvent1\" id=\"BPMNShape_startEvent1\">         <omgdc:Bounds height=\"30.0\" width=\"30.0\" x=\"100.0\" y=\"163.0\"></omgdc:Bounds>       </bpmndi:BPMNShape>       <bpmndi:BPMNShape bpmnElement=\"sid-ED401A6C-3B36-4470-9642-846666812DE9\" id=\"BPMNShape_sid-ED401A6C-3B36-4470-9642-846666812DE9\">         <omgdc:Bounds height=\"80.0\" width=\"100.0\" x=\"195.0\" y=\"138.0\"></omgdc:Bounds>       </bpmndi:BPMNShape>       <bpmndi:BPMNShape bpmnElement=\"sid-01242217-9F9A-4ADC-8908-1CAA455D78C2\" id=\"BPMNShape_sid-01242217-9F9A-4ADC-8908-1CAA455D78C2\">         <omgdc:Bounds height=\"28.0\" width=\"28.0\" x=\"370.0\" y=\"164.0\"></omgdc:Bounds>       </bpmndi:BPMNShape>       <bpmndi:BPMNEdge bpmnElement=\"sid-1DFCEDF9-9141-45B6-BC63-A5192DDFDEB3\" id=\"BPMNEdge_sid-1DFCEDF9-9141-45B6-BC63-A5192DDFDEB3\">         <omgdi:waypoint x=\"130.0\" y=\"178.0\"></omgdi:waypoint>         <omgdi:waypoint x=\"195.0\" y=\"178.0\"></omgdi:waypoint>       </bpmndi:BPMNEdge>       <bpmndi:BPMNEdge bpmnElement=\"sid-2A9F6FC6-97D3-460B-B419-2705FA703659\" id=\"BPMNEdge_sid-2A9F6FC6-97D3-460B-B419-2705FA703659\">         <omgdi:waypoint x=\"295.0\" y=\"178.0\"></omgdi:waypoint>         <omgdi:waypoint x=\"370.0\" y=\"178.0\"></omgdi:waypoint>       </bpmndi:BPMNEdge>     </bpmndi:BPMNPlane>   </bpmndi:BPMNDiagram> </definitions>"
+}
+
+### 保存草稿
+POST http://127.0.0.1:1987/definition/save-draft
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+{
+  "id": "7afddb28-be87-11e9-94c6-784f435b4b5e",
+  "name": "tes88t",
+  "description": "hhh88888",
+  "ownerId": 1,
+  "status": 1,
+  "graph": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:activiti=\"http://activiti.org/bpmn\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:omgdc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:omgdi=\"http://www.omg.org/spec/DD/20100524/DI\" typeLanguage=\"http://www.w3.org/2001/XMLSchema\" expressionLanguage=\"http://www.w3.org/1999/XPath\" targetNamespace=\"http://www.activiti.org/processdef\">     <process id=\"testListener04\" name=\"testLinster\" isExecutable=\"true\">         <extensionElements>             <activiti:executionListener event=\"start\" delegateExpression=\"${taskListenerImpl}\"></activiti:executionListener>         </extensionElements>         <startEvent id=\"startEvent1\"></startEvent>         <userTask id=\"testListener04-02\" name=\"secondPerson\" activiti:assignee=\"salaboy\" activiti:candidateUsers=\"erdemedeiros\" activiti:candidateGroups=\"activitiTeam\">             <extensionElements>                 <modeler:initiator-can-complete xmlns:modeler=\"http://activiti.com/modeler\"><![CDATA[false]]></modeler:initiator-can-complete>             </extensionElements>         </userTask>         <sequenceFlow id=\"sid-E5E37787-04CA-42E0-98B9-0A1605BE99D1\" sourceRef=\"testListener04-02\" targetRef=\"sid-C0908811-7991-43CA-9E9C-DF5BE3DC595A\"></sequenceFlow>         <userTask id=\"testListener04-01\" name=\"firstPerson\" activiti:assignee=\"salaboy\" activiti:candidateUsers=\"ryandawsonuk\" activiti:candidateGroups=\"activitiTeam\">             <extensionElements>                 <modeler:initiator-can-complete xmlns:modeler=\"http://activiti.com/modeler\"><![CDATA[true]]></modeler:initiator-can-complete>                 <activiti:taskListener event=\"create\" delegateExpression=\"${taskListenerImpl}\"></activiti:taskListener>             </extensionElements>         </userTask>         <sequenceFlow id=\"sid-C91D8211-1FF2-46F6-B664-D0D904AA9FB4\" sourceRef=\"startEvent1\" targetRef=\"testListener04-01\"></sequenceFlow>         <sequenceFlow id=\"sid-5FD7AE0C-7523-44FC-BC21-82F8922EB4F7\" sourceRef=\"testListener04-01\" targetRef=\"testListener04-02\"></sequenceFlow>         <endEvent id=\"sid-C0908811-7991-43CA-9E9C-DF5BE3DC595A\"></endEvent>     </process>     <bpmndi:BPMNDiagram id=\"BPMNDiagram_test01\">         <bpmndi:BPMNPlane bpmnElement=\"testListener04\" id=\"BPMNPlane_testListener04\">             <bpmndi:BPMNShape bpmnElement=\"startEvent1\" id=\"BPMNShape_startEvent1\">                 <omgdc:Bounds height=\"30.0\" width=\"30.0\" x=\"90.0\" y=\"60.0\"></omgdc:Bounds>             </bpmndi:BPMNShape>             <bpmndi:BPMNShape bpmnElement=\"testListener04-02\" id=\"BPMNShape_testListener04-02\">                 <omgdc:Bounds height=\"80.0\" width=\"100.0\" x=\"255.0\" y=\"135.0\"></omgdc:Bounds>             </bpmndi:BPMNShape>             <bpmndi:BPMNShape bpmnElement=\"testListener04-01\" id=\"BPMNShape_testListener04-01\">                 <omgdc:Bounds height=\"80.0\" width=\"100.0\" x=\"105.0\" y=\"135.0\"></omgdc:Bounds>             </bpmndi:BPMNShape>             <bpmndi:BPMNShape bpmnElement=\"sid-C0908811-7991-43CA-9E9C-DF5BE3DC595A\" id=\"BPMNShape_sid-C0908811-7991-43CA-9E9C-DF5BE3DC595A\">                 <omgdc:Bounds height=\"28.0\" width=\"28.0\" x=\"479.5\" y=\"153.0\"></omgdc:Bounds>             </bpmndi:BPMNShape>             <bpmndi:BPMNEdge bpmnElement=\"sid-E5E37787-04CA-42E0-98B9-0A1605BE99D1\" id=\"BPMNEdge_sid-E5E37787-04CA-42E0-98B9-0A1605BE99D1\">                 <omgdi:waypoint x=\"355.0\" y=\"175.0\"></omgdi:waypoint>                 <omgdi:waypoint x=\"402.5\" y=\"175.0\"></omgdi:waypoint>                 <omgdi:waypoint x=\"402.5\" y=\"160.0\"></omgdi:waypoint>                 <omgdi:waypoint x=\"479.54123720297787\" y=\"165.92624901561368\"></omgdi:waypoint>             </bpmndi:BPMNEdge>             <bpmndi:BPMNEdge bpmnElement=\"sid-C91D8211-1FF2-46F6-B664-D0D904AA9FB4\" id=\"BPMNEdge_sid-C91D8211-1FF2-46F6-B664-D0D904AA9FB4\">                 <omgdi:waypoint x=\"105.0\" y=\"90.0\"></omgdi:waypoint>                 <omgdi:waypoint x=\"105.0\" y=\"112.5\"></omgdi:waypoint>                 <omgdi:waypoint x=\"155.0\" y=\"112.5\"></omgdi:waypoint>                 <omgdi:waypoint x=\"155.0\" y=\"135.0\"></omgdi:waypoint>             </bpmndi:BPMNEdge>             <bpmndi:BPMNEdge bpmnElement=\"sid-5FD7AE0C-7523-44FC-BC21-82F8922EB4F7\" id=\"BPMNEdge_sid-5FD7AE0C-7523-44FC-BC21-82F8922EB4F7\">                 <omgdi:waypoint x=\"205.0\" y=\"175.0\"></omgdi:waypoint>                 <omgdi:waypoint x=\"255.0\" y=\"175.0\"></omgdi:waypoint>             </bpmndi:BPMNEdge>         </bpmndi:BPMNPlane>     </bpmndi:BPMNDiagram> </definitions>"
+}
+
+### 另保存为草稿
+POST http://127.0.0.1:1987/definition/save-as-draft
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+  "id": "7afddb28-be87-11e9-94c6-784f435b4b5e",
+  "name": "tes88t",
+  "description": "hhh88888",
+  "ownerId": 1,
+  "status": 1,
+  "newVersionIfReleased": 1,
+  "graph": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:activiti=\"http://activiti.org/bpmn\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:omgdc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:omgdi=\"http://www.omg.org/spec/DD/20100524/DI\" typeLanguage=\"http://www.w3.org/2001/XMLSchema\" expressionLanguage=\"http://www.w3.org/1999/XPath\" targetNamespace=\"http://www.activiti.org/processdef\">     <process id=\"testListener04\" name=\"testLinster\" isExecutable=\"true\">         <extensionElements>             <activiti:executionListener event=\"start\" delegateExpression=\"${taskListenerImpl}\"></activiti:executionListener>         </extensionElements>         <startEvent id=\"startEvent1\"></startEvent>         <userTask id=\"testListener04-02\" name=\"secondPerson\" activiti:assignee=\"salaboy\" activiti:candidateUsers=\"erdemedeiros\" activiti:candidateGroups=\"activitiTeam\">             <extensionElements>                 <modeler:initiator-can-complete xmlns:modeler=\"http://activiti.com/modeler\"><![CDATA[false]]></modeler:initiator-can-complete>             </extensionElements>         </userTask>         <sequenceFlow id=\"sid-E5E37787-04CA-42E0-98B9-0A1605BE99D1\" sourceRef=\"testListener04-02\" targetRef=\"sid-C0908811-7991-43CA-9E9C-DF5BE3DC595A\"></sequenceFlow>         <userTask id=\"testListener04-01\" name=\"firstPerson\" activiti:assignee=\"salaboy\" activiti:candidateUsers=\"ryandawsonuk\" activiti:candidateGroups=\"activitiTeam\">             <extensionElements>                 <modeler:initiator-can-complete xmlns:modeler=\"http://activiti.com/modeler\"><![CDATA[true]]></modeler:initiator-can-complete>                 <activiti:taskListener event=\"create\" delegateExpression=\"${taskListenerImpl}\"></activiti:taskListener>             </extensionElements>         </userTask>         <sequenceFlow id=\"sid-C91D8211-1FF2-46F6-B664-D0D904AA9FB4\" sourceRef=\"startEvent1\" targetRef=\"testListener04-01\"></sequenceFlow>         <sequenceFlow id=\"sid-5FD7AE0C-7523-44FC-BC21-82F8922EB4F7\" sourceRef=\"testListener04-01\" targetRef=\"testListener04-02\"></sequenceFlow>         <endEvent id=\"sid-C0908811-7991-43CA-9E9C-DF5BE3DC595A\"></endEvent>     </process>     <bpmndi:BPMNDiagram id=\"BPMNDiagram_test01\">         <bpmndi:BPMNPlane bpmnElement=\"testListener04\" id=\"BPMNPlane_testListener04\">             <bpmndi:BPMNShape bpmnElement=\"startEvent1\" id=\"BPMNShape_startEvent1\">                 <omgdc:Bounds height=\"30.0\" width=\"30.0\" x=\"90.0\" y=\"60.0\"></omgdc:Bounds>             </bpmndi:BPMNShape>             <bpmndi:BPMNShape bpmnElement=\"testListener04-02\" id=\"BPMNShape_testListener04-02\">                 <omgdc:Bounds height=\"80.0\" width=\"100.0\" x=\"255.0\" y=\"135.0\"></omgdc:Bounds>             </bpmndi:BPMNShape>             <bpmndi:BPMNShape bpmnElement=\"testListener04-01\" id=\"BPMNShape_testListener04-01\">                 <omgdc:Bounds height=\"80.0\" width=\"100.0\" x=\"105.0\" y=\"135.0\"></omgdc:Bounds>             </bpmndi:BPMNShape>             <bpmndi:BPMNShape bpmnElement=\"sid-C0908811-7991-43CA-9E9C-DF5BE3DC595A\" id=\"BPMNShape_sid-C0908811-7991-43CA-9E9C-DF5BE3DC595A\">                 <omgdc:Bounds height=\"28.0\" width=\"28.0\" x=\"479.5\" y=\"153.0\"></omgdc:Bounds>             </bpmndi:BPMNShape>             <bpmndi:BPMNEdge bpmnElement=\"sid-E5E37787-04CA-42E0-98B9-0A1605BE99D1\" id=\"BPMNEdge_sid-E5E37787-04CA-42E0-98B9-0A1605BE99D1\">                 <omgdi:waypoint x=\"355.0\" y=\"175.0\"></omgdi:waypoint>                 <omgdi:waypoint x=\"402.5\" y=\"175.0\"></omgdi:waypoint>                 <omgdi:waypoint x=\"402.5\" y=\"160.0\"></omgdi:waypoint>                 <omgdi:waypoint x=\"479.54123720297787\" y=\"165.92624901561368\"></omgdi:waypoint>             </bpmndi:BPMNEdge>             <bpmndi:BPMNEdge bpmnElement=\"sid-C91D8211-1FF2-46F6-B664-D0D904AA9FB4\" id=\"BPMNEdge_sid-C91D8211-1FF2-46F6-B664-D0D904AA9FB4\">                 <omgdi:waypoint x=\"105.0\" y=\"90.0\"></omgdi:waypoint>                 <omgdi:waypoint x=\"105.0\" y=\"112.5\"></omgdi:waypoint>                 <omgdi:waypoint x=\"155.0\" y=\"112.5\"></omgdi:waypoint>                 <omgdi:waypoint x=\"155.0\" y=\"135.0\"></omgdi:waypoint>             </bpmndi:BPMNEdge>             <bpmndi:BPMNEdge bpmnElement=\"sid-5FD7AE0C-7523-44FC-BC21-82F8922EB4F7\" id=\"BPMNEdge_sid-5FD7AE0C-7523-44FC-BC21-82F8922EB4F7\">                 <omgdi:waypoint x=\"205.0\" y=\"175.0\"></omgdi:waypoint>                 <omgdi:waypoint x=\"255.0\" y=\"175.0\"></omgdi:waypoint>             </bpmndi:BPMNEdge>         </bpmndi:BPMNPlane>     </bpmndi:BPMNDiagram> </definitions>"
+}
+
+### 发布流程
+POST http://127.0.0.1:8109/definition/publish
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+  "id": "c1876e15-c047-11e9-833a-784f435b4b5e",
+  "name": "tes88t",
+  "description": "hhh88888",
+  "ownerId": 1,
+  "status": 1,
+  "graph": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:activiti=\"http://activiti.org/bpmn\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:omgdc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:omgdi=\"http://www.omg.org/spec/DD/20100524/DI\" typeLanguage=\"http://www.w3.org/2001/XMLSchema\" expressionLanguage=\"http://www.w3.org/1999/XPath\" targetNamespace=\"http://www.activiti.org/processdef\">     <process id=\"testListener04\" name=\"testLinster\" isExecutable=\"true\">         <extensionElements>             <activiti:executionListener event=\"start\" delegateExpression=\"${taskListenerImpl}\"></activiti:executionListener>         </extensionElements>         <startEvent id=\"startEvent1\"></startEvent>         <userTask id=\"testListener04-02\" name=\"secondPerson\" activiti:assignee=\"salaboy\" activiti:candidateUsers=\"erdemedeiros\" activiti:candidateGroups=\"activitiTeam\">             <extensionElements>                 <modeler:initiator-can-complete xmlns:modeler=\"http://activiti.com/modeler\"><![CDATA[false]]></modeler:initiator-can-complete>             </extensionElements>         </userTask>         <sequenceFlow id=\"sid-E5E37787-04CA-42E0-98B9-0A1605BE99D1\" sourceRef=\"testListener04-02\" targetRef=\"sid-C0908811-7991-43CA-9E9C-DF5BE3DC595A\"></sequenceFlow>         <userTask id=\"testListener04-01\" name=\"firstPerson\" activiti:assignee=\"salaboy\" activiti:candidateUsers=\"ryandawsonuk\" activiti:candidateGroups=\"activitiTeam\">             <extensionElements>                 <modeler:initiator-can-complete xmlns:modeler=\"http://activiti.com/modeler\"><![CDATA[true]]></modeler:initiator-can-complete>                 <activiti:taskListener event=\"create\" delegateExpression=\"${taskListenerImpl}\"></activiti:taskListener>             </extensionElements>         </userTask>         <sequenceFlow id=\"sid-C91D8211-1FF2-46F6-B664-D0D904AA9FB4\" sourceRef=\"startEvent1\" targetRef=\"testListener04-01\"></sequenceFlow>         <sequenceFlow id=\"sid-5FD7AE0C-7523-44FC-BC21-82F8922EB4F7\" sourceRef=\"testListener04-01\" targetRef=\"testListener04-02\"></sequenceFlow>         <endEvent id=\"sid-C0908811-7991-43CA-9E9C-DF5BE3DC595A\"></endEvent>     </process>     <bpmndi:BPMNDiagram id=\"BPMNDiagram_test01\">         <bpmndi:BPMNPlane bpmnElement=\"testListener04\" id=\"BPMNPlane_testListener04\">             <bpmndi:BPMNShape bpmnElement=\"startEvent1\" id=\"BPMNShape_startEvent1\">                 <omgdc:Bounds height=\"30.0\" width=\"30.0\" x=\"90.0\" y=\"60.0\"></omgdc:Bounds>             </bpmndi:BPMNShape>             <bpmndi:BPMNShape bpmnElement=\"testListener04-02\" id=\"BPMNShape_testListener04-02\">                 <omgdc:Bounds height=\"80.0\" width=\"100.0\" x=\"255.0\" y=\"135.0\"></omgdc:Bounds>             </bpmndi:BPMNShape>             <bpmndi:BPMNShape bpmnElement=\"testListener04-01\" id=\"BPMNShape_testListener04-01\">                 <omgdc:Bounds height=\"80.0\" width=\"100.0\" x=\"105.0\" y=\"135.0\"></omgdc:Bounds>             </bpmndi:BPMNShape>             <bpmndi:BPMNShape bpmnElement=\"sid-C0908811-7991-43CA-9E9C-DF5BE3DC595A\" id=\"BPMNShape_sid-C0908811-7991-43CA-9E9C-DF5BE3DC595A\">                 <omgdc:Bounds height=\"28.0\" width=\"28.0\" x=\"479.5\" y=\"153.0\"></omgdc:Bounds>             </bpmndi:BPMNShape>             <bpmndi:BPMNEdge bpmnElement=\"sid-E5E37787-04CA-42E0-98B9-0A1605BE99D1\" id=\"BPMNEdge_sid-E5E37787-04CA-42E0-98B9-0A1605BE99D1\">                 <omgdi:waypoint x=\"355.0\" y=\"175.0\"></omgdi:waypoint>                 <omgdi:waypoint x=\"402.5\" y=\"175.0\"></omgdi:waypoint>                 <omgdi:waypoint x=\"402.5\" y=\"160.0\"></omgdi:waypoint>                 <omgdi:waypoint x=\"479.54123720297787\" y=\"165.92624901561368\"></omgdi:waypoint>             </bpmndi:BPMNEdge>             <bpmndi:BPMNEdge bpmnElement=\"sid-C91D8211-1FF2-46F6-B664-D0D904AA9FB4\" id=\"BPMNEdge_sid-C91D8211-1FF2-46F6-B664-D0D904AA9FB4\">                 <omgdi:waypoint x=\"105.0\" y=\"90.0\"></omgdi:waypoint>                 <omgdi:waypoint x=\"105.0\" y=\"112.5\"></omgdi:waypoint>                 <omgdi:waypoint x=\"155.0\" y=\"112.5\"></omgdi:waypoint>                 <omgdi:waypoint x=\"155.0\" y=\"135.0\"></omgdi:waypoint>             </bpmndi:BPMNEdge>             <bpmndi:BPMNEdge bpmnElement=\"sid-5FD7AE0C-7523-44FC-BC21-82F8922EB4F7\" id=\"BPMNEdge_sid-5FD7AE0C-7523-44FC-BC21-82F8922EB4F7\">                 <omgdi:waypoint x=\"205.0\" y=\"175.0\"></omgdi:waypoint>                 <omgdi:waypoint x=\"255.0\" y=\"175.0\"></omgdi:waypoint>             </bpmndi:BPMNEdge>         </bpmndi:BPMNPlane>     </bpmndi:BPMNDiagram> </definitions>"
+}
+
+### 发布流程
+POST http://127.0.0.1:8109/definition/publish
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+  "id": "a390a909-ca58-11e9-9238-a0510b6d2db1"
+}
+
+### 启动实例
+POST http://127.0.0.1:8109/instance/start
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+  "key": "7b04045f-cec7-49f7-aca2-1423333f5e7e",
+  "businessKey": "456",
+  "businessUrl": "www.baidu.com",
+  "name": ""
+}
+
+###暂停实例
+POST http://127.0.0.1:8109/instance/suspend
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+  "lastUpdatedBy": 1,
+  "createdOn": "2019-08-22 11:40:33",
+  "definitionVersion": 1,
+  "createdBy": 1,
+  "name": "工单处理",
+  "businessKey": "456",
+  "definitionCode": "eaa18be9-a4e6-4a3c-a3d7-5e400add7173",
+  "lastUpdatedOn": "2019-08-22 11:40:33",
+  "startTime": "2019-08-22 11:40:33",
+  "id": "985814b6-c48e-11e9-b2ce-a0510b6d2db1",
+  "endTime": null,
+  "definitionId": "3b385beb-c48e-11e9-b2ce-a0510b6d2db1",
+  "status": 2
+}
+
+
+###激活实例
+POST http://127.0.0.1:8109/instance/activate
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+  "lastUpdatedBy": 1,
+  "createdOn": "2019-08-22 11:40:33",
+  "definitionVersion": 1,
+  "createdBy": 1,
+  "name": "工单处理",
+  "businessKey": "456",
+  "definitionCode": "eaa18be9-a4e6-4a3c-a3d7-5e400add7173",
+  "lastUpdatedOn": "2019-08-22 11:40:33",
+  "startTime": "2019-08-22 11:40:33",
+  "id": "985814b6-c48e-11e9-b2ce-a0510b6d2db1",
+  "endTime": null,
+  "definitionId": "3b385beb-c48e-11e9-b2ce-a0510b6d2db1",
+  "status": 1
+}
+
+###删除实例
+POST http://127.0.0.1:8109/instance/delete
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+  "instanceId": "985814b6-c48e-11e9-b2ce-a0510b6d2db1",
+  "deleteReason": "测试删除！"
+}
+
+### 查询流程图
+GET http://127.0.0.1:1987/definition/graph?id=7afddb28-be87-11e9-94c6-784f435b4b5e
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+### 查询流程定义详情
+GET http://127.0.0.1:1987/definition/info?id=7afddb28-be87-11e9-94c6-784f435b4b5e
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+### 分页查询流程定义
+GET http://127.0.0.1:1987/definition/list?pageIndex=0&pagesize=10
+Content-Type: application/x-www-form-urlencoded
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+###分页查询实例
+GET http://127.0.0.1:1987/instance/list?pageIndex=0&pageSize=10&definitionId=3b385beb-c48e-11e9-b2ce-a0510b6d2db1
+Content-Type: application/x-www-form-urlencoded
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+###分页查询历史
+GET http://127.0.0.1:8109/history/list?pageIndex=0&pageSize=10&definitionId=3b385beb-c48e-11e9-b2ce-a0510b6d2db1
+Content-Type: application/x-www-form-urlencoded
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+###查询流程分类
+GET http://127.0.0.1:8109/category/search
+Content-Type: application/x-www-form-urlencoded
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+###通过分类Id查询表单json
+GET http://127.0.0.1:8109/category/json?id=2
+Content-Type: application/x-www-form-urlencoded
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+### 查询所有流程实例
+GET http://127.0.0.1:8109/instance/my/list
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+###提交工单
+POST http://127.0.0.1:8109/category/submit/form
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+  "variables": {
+    "checkbox": [
+      "CHN",
+      "JPN"
+    ],
+    "name": "去瞧瞧",
+    "radio": "ENG",
+    "region": [
+      "广东省",
+      "广州市",
+      "天河区"
+    ],
+    "selector": "1",
+    "time": "14:00"
+  },
+  "categoryId": 2
+}
+
+###微信小程序获取用户信息解密
+POST http://127.0.0.1:8109/wx/decodeUserInfo
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+{
+  "code": "043DNI4f02LX0t1YG24f0jsq4f0DNI4m",
+  "encryptedData": "9LWOnCPw4q8DbnBklY8sMnojF1uOArvoLbwqBjGmNUbF9BbtPNV0YqOch9lJlQS+/n0FzEp0nhWn/CDxbj3QhtBymtGmTydKXs6g4c+wKl3mUnk0t5e37jAyCMz6xXs/s2oJjW+444tIx3OSxnZetl6XX/sVJ2Jj7r//pbjMe4bEfTFZcxlVJf1T0XbamaG+5r7E3Ie8e5g0pbwap1pIIU01OR0VF+SMZUYdFtW5y6TzlTBoFwIFzbzXbYe8jLedwSSPftUL02GlUx09hh8cAFOsJvJslT7EYuI6cwIK0ixMj0C2atS7Ms78k+HSOh6VTcviaUjXz1HMg6QJbYVvVuLqAbjjuqKq2W3mm+WPsTY+MjwXTX7NFMiFbrwXzaKoBC+NW1ClRHn5v76SAxomBlXPPUusDFfz5EXBnwz3ktIb7qbUFdD1HwfNTpWvbTToLrg3vPLy0YZ1ti8k4XrkL/9OAZMvMwyuKRIjU5G5bnY=",
+  "iv": "5/ga2gwe4i98ny1/JzGE0g=="
+}
+
+###采购单状态查询
+GET http://127.0.0.1:8109/instance/logs?businessKey=500
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+
+###调用MP的查询采购单详情
+GET http://127.0.0.1:8109/mp/PurchaseDetail?orderNumber=SPO2017110700056
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+###启动采购订单
+POST http://test.nagy.ruigushop.com/workflow/instance/start
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+{
+  "key": "purchase-approval",
+  "businessKey": "SPO201909292023360001000019",
+  "name": "采购申请单",
+  "sourcePlatform": "mp",
+  "sourcePlatformUserId": 1,
+  "sourcePlatformUserName": "Alan",
+  "creatorId": 1115
+}
+
+###启动采购订单
+POST http://test.nagy.ruigushop.com/workflow/instance/start
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+{
+  "key": "purchase-approval",
+  "businessKey": "SPO201909192032240001000009",
+  "name": "2019092703测试环境采购申请单",
+  "sourcePlatform": "mp",
+  "sourcePlatformUserId": 1,
+  "sourcePlatformUserName": "樊笑然",
+  "creatorId": 1325
+}
+
+###
+###启动采购订单
+POST http://rbox.ruigushop.com/workflow/instance/start
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+{
+  "key": "test2",
+  "businessKey": "SPO2019091920322400010000092323",
+  "name": "采购申请单(idea模拟的)",
+  "sourcePlatform": "idea",
+  "sourcePlatformUserId": 1115,
+  "sourcePlatformUserName": "Alan",
+  "creatorId": 1115
+}
+
+###
+POST http://localhost:8080/instance/start
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+{
+  "key": "dev_purchase_order",
+  "businessKey": "SPO201909192032240001000009",
+  "name": "2019092901开发环境采购申请单",
+  "sourcePlatform": "mp",
+  "sourcePlatformUserId": 1,
+  "sourcePlatformUserName": "liqingtian",
+  "creatorId": 7311
+}
+
+###启动采购订单
+POST http://127.0.0.1:8080/workflow/instance/start
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+{
+  "key": "test3",
+  "businessKey": "SPO20190919209cx99vv00880",
+  "name": "这是测试",
+  "creatorId": 7224,
+  "businessParams": {
+    "matching": 1
+  }
+}
+
+###测试请假流程
+POST http://127.0.0.1:8080/workflow/instance/start
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+{
+  "key": "leave",
+  "businessKey": "1222312dfdf2181",
+  "creatorId": 7224,
+  "variables": {
+    "type": "2",
+    "reason": "肚子疼痛"
+  }
+}
+
+###批量生成测试数据
+POST http://127.0.0.1:8080/workflow/data/apply
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+{
+  "key": "leave",
+  "creatorId": 7224,
+  "variables": {
+    "type": "2",
+    "reason": "肚子疼痛"
+  }
+}
+
+### 库存变更
+POST http://dev.rbwkfw.ruigushop.com/instance/start
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+{
+  "key": "stock-change-apply",
+  "creatorId": 7224,
+  "variables": {
+    "storageId": 455,
+    "increased": 1,
+    "immediately": 0,
+    "planTime": "2020-02-19 12:00:00",
+    "item": [
+      {
+        "skuCode": 100150426,
+        "count": 10
+      }
+    ]
+  }
+}
+
+### stock超时
+GET http://localhost:8080/stock/not/use/timeout
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+### 去库存
+POST http://localhost:9019/instance/start
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+{
+  "key": "stock-change-apply",
+  "creatorId": 7303,
+  "variables": {
+    "storageId": 455,
+    "increased": 0,
+    "immediately": 1,
+    "planTime": "",
+    "item": [
+      {
+        "skuCode": 100150426,
+        "count": 1
+      }
+    ]
+  }
+}
+
+###更通知
+GET http://localhost:8080/stock/change/result/notice
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+###刷新未拉平检查状态
+POST http://localhost:8080//workflow/stock-change-apply/refresh-unbalanced-flag
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+###刷新未拉平检查状态
+POST http://localhost:8080//workflow/stock-change-apply/sku/refresh-unbalanced-flag
+Content-Type: application/x-www-form-urlencoded
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+storageId=455&skuCode=263736511
+
+### 锁定库存
+POST http://localhost:8080/instance/start
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+{
+  "key": "dev_stock_lock",
+  "creatorId": 7442,
+  "variables": {
+    "storageId": 455,
+    "stockType": 0,
+    "skuCode": 130040285,
+    "count": 10,
+    "planLockTime": "2019-11-16 19:45:24",
+    "planUnlockTime": "2019-11-17 19:45:24"
+  }
+}
+
+###测试问题提交启动流程
+POST http://localhost:8080/instance/start
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+{
+  "key": "lightning-chain",
+  "creatorId": 7224
+}
+
+###测试问题撤回
+POST http://localhost:8080/instance/backout
+Content-Type: application/json
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+
+{
+  "instanceId": "45cfda3b-1819-11ea-8e5b-005056c00008",
+  "operationUserId": 7474,
+  "signalName": "contactBackout"
+}
+###测试闪电链流程
+POST http://localhost:8080/instance/start
+
+### 库存超时
+GET http://localhost:9019/stock/not/use/timeout
+Authorization: sjdadjhdjakslf2oj832rfnf49urnfu4r823jifj092
+X-UserInfo-UserId: 1
+X-UserInfo-Username: alan
+
+###
+
