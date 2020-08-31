@@ -10,7 +10,10 @@ import com.ruigu.rbox.workflow.model.request.SpecialAfterSaleQuotaRuleRequest;
 import com.ruigu.rbox.workflow.model.vo.SpecialAfterSaleQuotaRuleVO;
 import com.ruigu.rbox.workflow.service.SpecialAfterSaleQuotaService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -41,20 +44,20 @@ public class SpecialAfterSaleInitQuotaController {
     }
 
     @ApiOperation(value = "查询额度规则", notes = "查询额度规则")
-    @GetMapping("/quota-rule-scope")
-    public ServerResponse<PageImpl<SpecialAfterSaleQuotaRuleVO>> findQuotaRuleScope(@Valid PageableRequest req) {
+    @PostMapping("/quota-rule-scope")
+    public ServerResponse<PageImpl<SpecialAfterSaleQuotaRuleVO>> findQuotaRuleScope(@Valid @RequestBody PageableRequest req) {
         return ServerResponse.ok(specialAfterSaleQuotaService.queryAllQuotaRule(req));
     }
 
     @ApiOperation(value = "查询额度规则历史", notes = "查询额度规则历史")
-    @GetMapping("/quota-rule-history")
-    public ServerResponse<PageImpl<SpecialAfterSaleQuotaRuleVO>> findQuotaRuleScopeHistory(@Valid SpecialAfterSaleQuotaRuleHistoryRequest req) {
+    @PostMapping("/quota-rule-history")
+    public ServerResponse<PageImpl<SpecialAfterSaleQuotaRuleVO>> findQuotaRuleScopeHistory(@Valid @RequestBody SpecialAfterSaleQuotaRuleHistoryRequest req) {
         return ServerResponse.ok(specialAfterSaleQuotaService.queryQuotaRuleHistory(req));
     }
 
     @ApiOperation(value = "启用禁用额度规则", notes = "启用禁用额度规则")
-    @GetMapping("/enable/quota-rule")
-    public ServerResponse enableQuotaRule(@Valid SpecialAfterSaleQuotaRuleEnableRequest req) {
+    @PostMapping("/enable/quota-rule")
+    public ServerResponse enableQuotaRule(@Valid @RequestBody SpecialAfterSaleQuotaRuleEnableRequest req) {
         specialAfterSaleQuotaService.enableQuotaRule(req);
         return ServerResponse.ok();
     }

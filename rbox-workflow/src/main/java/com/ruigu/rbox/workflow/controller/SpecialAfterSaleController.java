@@ -1,12 +1,12 @@
 package com.ruigu.rbox.workflow.controller;
 
+import com.ruigu.rbox.cloud.kanai.web.page.PageImpl;
 import com.ruigu.rbox.workflow.model.ServerResponse;
 import com.ruigu.rbox.workflow.model.request.*;
 import com.ruigu.rbox.workflow.model.request.lightning.AddSpecialAfterSaleApplyRequest;
 import com.ruigu.rbox.workflow.model.vo.SpecialAfterSaleDetailApplyVO;
 import com.ruigu.rbox.workflow.model.vo.SpecialAfterSaleSimpleApplyVO;
 import com.ruigu.rbox.workflow.service.SpecialAfterSaleService;
-import com.ruigu.rbox.workflow.supports.ExportUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 /**
@@ -96,15 +97,15 @@ public class SpecialAfterSaleController {
     }
 
     @ApiOperation(value = "查询特殊售后列表", notes = "查询特殊售后列表")
-    @GetMapping("/apply-list")
-    public ServerResponse findAfterSaleList(@Valid SpecialAfterSaleApplyRequest req) {
+    @PostMapping("/apply-list")
+    public ServerResponse findAfterSaleList(@Valid @RequestBody SpecialAfterSaleApplyRequest req) {
         return ServerResponse.ok(specialAfterSaleService.queryAfterSaleList(req));
     }
 
     @ApiOperation(value = "导出特殊售后审批数据", notes = "导出全部特殊售后审批数据")
     @GetMapping("/apply-excel")
-    public ServerResponse exportAfterSaleApplyList(@Valid SpecialAfterSaleApplyExportRequest req) {
-        ExportUtil.writeEasyExcelResponse("全部特殊售后审批列表", specialAfterSaleService.exportAfterSaleApplyList(req));
+    public ServerResponse exportAllAfterSale(HttpServletResponse response) {
+        specialAfterSaleService.exportAllAfterSale(response);
         return ServerResponse.ok();
     }
 

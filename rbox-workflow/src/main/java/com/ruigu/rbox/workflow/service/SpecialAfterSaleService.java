@@ -11,7 +11,6 @@ import com.ruigu.rbox.workflow.model.vo.SpecialAfterSaleSimpleApplyVO;
 import org.springframework.data.domain.Page;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * @author liqingtian
@@ -106,9 +105,9 @@ public interface SpecialAfterSaleService {
     /**
      * 导出所有特殊售后记录
      *
-     * @param req 请求参数
+     * @param response response对象
      */
-    List<SpecialAfterSaleApplyRecordVO> exportAfterSaleApplyList(SpecialAfterSaleApplyExportRequest req);
+    void exportAllAfterSale(HttpServletResponse response);
 
     /**
      * 查询我提交的申请列表

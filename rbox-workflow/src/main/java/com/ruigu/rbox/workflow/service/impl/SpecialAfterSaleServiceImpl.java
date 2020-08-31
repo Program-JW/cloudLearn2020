@@ -1,6 +1,10 @@
 package com.ruigu.rbox.workflow.service.impl;
 
+import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.ExcelWriter;
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ruigu.rbox.cloud.kanai.model.YesOrNoEnum;
 import com.ruigu.rbox.cloud.kanai.security.UserHelper;
@@ -9,20 +13,21 @@ import com.ruigu.rbox.cloud.kanai.util.TimeUtil;
 import com.ruigu.rbox.workflow.constants.RedisKeyConstants;
 import com.ruigu.rbox.workflow.exceptions.GlobalRuntimeException;
 import com.ruigu.rbox.workflow.exceptions.VerificationFailedException;
+import com.ruigu.rbox.workflow.feign.PassportFeignClient;
 import com.ruigu.rbox.workflow.manager.PassportFeignManager;
 import com.ruigu.rbox.workflow.manager.SpecialAfterSaleApplyManager;
 import com.ruigu.rbox.workflow.manager.SpecialAfterSaleLogManager;
 import com.ruigu.rbox.workflow.manager.UserManager;
-import com.ruigu.rbox.workflow.model.dto.PassportUserInfoDTO;
-import com.ruigu.rbox.workflow.model.dto.SpecialAfterSaleGroupQuotaDTO;
-import com.ruigu.rbox.workflow.model.dto.SpecialAfterSaleReviewPositionDTO;
-import com.ruigu.rbox.workflow.model.dto.UserGroupSimpleDTO;
+import com.ruigu.rbox.workflow.model.dto.*;
 import com.ruigu.rbox.workflow.model.entity.*;
 import com.ruigu.rbox.workflow.model.enums.*;
 import com.ruigu.rbox.workflow.model.request.*;
 import com.ruigu.rbox.workflow.model.request.lightning.AddSpecialAfterSaleApplyRequest;
 import com.ruigu.rbox.workflow.model.vo.*;
-import com.ruigu.rbox.workflow.repository.*;
+import com.ruigu.rbox.workflow.repository.SpecialAfterSaleApplyApproverRepository;
+import com.ruigu.rbox.workflow.repository.SpecialAfterSaleApplyRepository;
+import com.ruigu.rbox.workflow.repository.SpecialAfterSaleDetailRepository;
+import com.ruigu.rbox.workflow.repository.SpecialAfterSaleReviewNodeRepository;
 import com.ruigu.rbox.workflow.service.*;
 import com.ruigu.rbox.workflow.supports.ObjectUtil;
 import org.apache.commons.collections4.CollectionUtils;
@@ -40,6 +45,13 @@ import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -79,6 +91,8 @@ public class SpecialAfterSaleServiceImpl implements SpecialAfterSaleService {
     private QuestNoticeService questNoticeService;
     @Value("${rbox.workflow.definition.special-after-sale}")
     private String sasDefinitionKey;
+    @Autowired
+    private PassportFeignClient passportFeignClient;
 
     @Autowired
     private JPAQueryFactory queryFactory;
@@ -89,12 +103,13 @@ public class SpecialAfterSaleServiceImpl implements SpecialAfterSaleService {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
+    private final static String EXCEL_NAME = "全部特殊售后审批列表";
+
+    private final static String FILE_TYPE = ".xlsx";
+
     private final Map<Integer, String> logActionDict;
 
     private final Map<Integer, String> applyStatusDict;
-
-    @Resource
-    private SpecialAfterSaleCcListRepository specialAfterSaleCcListRepository;
 
     {
         logActionDict = new HashMap<>(16);
@@ -402,24 +417,78 @@ public class SpecialAfterSaleServiceImpl implements SpecialAfterSaleService {
     @Override
     public Page<SpecialAfterSaleSimpleApplyVO> queryMyCcApplyList(SpecialAfterSaleSearchRequest req) {
         Integer userId = UserHelper.getUserId();
-        QueryResults<SpecialAfterSaleApplyEntity> results = specialAfterSaleCcListRepository.queryMyCcApplyList(req, userId);
-        return convertApplySimpleVoPage(PageRequest.of(req.getPage(), req.getSize()), results.getTotal(), results.getResults());
+        Integer page = req.getPage();
+        Integer limit = req.getSize();
+        String applyName = StringUtils.trim(req.getKeyWord());
+        QSpecialAfterSaleCcEntity ccEntity = QSpecialAfterSaleCcEntity.specialAfterSaleCcEntity;
+        QSpecialAfterSaleApplyEntity applyEntity = QSpecialAfterSaleApplyEntity.specialAfterSaleApplyEntity;
+        Predicate predicate = ccEntity.userId.eq(userId);
+        //执行动态条件拼装
+        predicate = StringUtils.isEmpty(applyName) ?
+                predicate : ExpressionUtils.and(predicate, applyEntity.applyNickname.like("%" + applyName + "%"));
+        QueryResults<SpecialAfterSaleApplyEntity> results = queryFactory.select(applyEntity)
+                .from(applyEntity)
+                .join(ccEntity)
+                .on(ccEntity.applyId.eq(applyEntity.id))
+                .where(predicate)
+                .offset(page * limit)
+                .limit(limit)
+                .orderBy(ccEntity.userId.asc())
+                .fetchResults();
+        return convertApplySimpleVoPage(PageRequest.of(page, limit), results.getTotal(), results.getResults());
     }
 
     @Override
     public com.ruigu.rbox.cloud.kanai.web.page.PageImpl<SpecialAfterSaleApplyRecordVO> queryAfterSaleList(SpecialAfterSaleApplyRequest req) {
-        QueryResults<SpecialAfterSaleApplyEntity> results = specialAfterSaleApplyRepository.queryAfterSaleListByPage(req);
-        List<SpecialAfterSaleApplyRecordVO> applyList = queryUserIdByGroup(results.getResults());
-        return com.ruigu.rbox.cloud.kanai.web.page.PageImpl.of(applyList, PageRequest.of(req.getPage(), req.getSize()), (int) results.getTotal());
+        Integer page = req.getPage();
+        Integer limit = req.getSize();
+        Integer status = req.getStatus();
+        Integer deptId = req.getDeptId();
+        String userName = StringUtils.trim(req.getUserName());
+        LocalDate startDate = req.getStartTime();
+        LocalDate endDate = req.getEndTime();
+        QSpecialAfterSaleApplyEntity applyEntity = QSpecialAfterSaleApplyEntity.specialAfterSaleApplyEntity;
+        Predicate predicate = applyEntity.isNotNull().or(applyEntity.isNull());
+        //执行动态条件拼装
+        predicate = StringUtils.isBlank(userName) ?
+                predicate : ExpressionUtils.and(predicate, applyEntity.applyNickname.like("%" + userName + "%"));
+        predicate = status == null ?
+                predicate : ExpressionUtils.and(predicate, applyEntity.status.eq(status));
+        if (deptId != null) {
+            List<Integer> userList = passportFeignClient.getUserIdListUnderTheGroup(Collections.singletonList(deptId)).getData();
+            if (userList == null) {
+                throw new GlobalRuntimeException(ResponseCode.ERROR.getCode(), "申请人编号" + deptId + "对应的部门无法找到");
+            }
+            predicate = ExpressionUtils.and(predicate, applyEntity.createdBy.in(userList));
+        }
+        if (startDate != null && endDate != null) {
+            LocalDateTime start = LocalDateTime.of(req.getStartTime(), LocalTime.MIN);
+            LocalDateTime end = LocalDateTime.of(req.getEndTime(), LocalTime.MAX);
+            predicate = ExpressionUtils.and(predicate, applyEntity.createdAt.between(start, end));
+        } else if (startDate != null) {
+            LocalDateTime start = LocalDateTime.of(req.getStartTime(), LocalTime.MIN);
+            predicate = ExpressionUtils.and(predicate, applyEntity.createdAt.goe(start));
+        } else if (endDate != null) {
+            LocalDateTime end = LocalDateTime.of(req.getEndTime(), LocalTime.MAX);
+            predicate = ExpressionUtils.and(predicate, applyEntity.createdAt.loe(end));
+        }
+        QueryResults<SpecialAfterSaleApplyEntity> results = queryFactory.selectFrom(applyEntity)
+                .where(predicate)
+                .offset(page * limit)
+                .limit(limit)
+                .orderBy(applyEntity.id.asc())
+                .fetchResults();
+        List<SpecialAfterSaleApplyRecordVO> applyList = queryUserIdByGroup(results);
+        return com.ruigu.rbox.cloud.kanai.web.page.PageImpl.of(applyList, PageRequest.of(page, limit), (int) results.getTotal());
     }
 
     /**
-     * 组合特殊售后列表
+     * 返回特殊售后列表返回列表
      *
-     * @param applyLists 特殊售后列表
+     * @param results 特殊售后列表
      */
-    private List<SpecialAfterSaleApplyRecordVO> queryUserIdByGroup(List<SpecialAfterSaleApplyEntity> applyLists) {
-        List<SpecialAfterSaleApplyRecordVO> applyRecords = applyLists.stream().map(apply -> SpecialAfterSaleApplyRecordVO.builder()
+    private List<SpecialAfterSaleApplyRecordVO> queryUserIdByGroup(QueryResults<SpecialAfterSaleApplyEntity> results) {
+        List<SpecialAfterSaleApplyRecordVO> applyList = results.getResults().stream().map(apply -> SpecialAfterSaleApplyRecordVO.builder()
                 .nickName(apply.getApplyNickname())
                 .userId(apply.getCreatedBy())
                 .customerName(apply.getCustomerName())
@@ -431,9 +500,9 @@ public class SpecialAfterSaleServiceImpl implements SpecialAfterSaleService {
                 .totalApplyAmount(apply.getTotalApplyAmount())
                 .applyCode(apply.getCode())
                 .build()).collect(Collectors.toList());
-        Set<Integer> userSet = applyLists.stream().map(SpecialAfterSaleApplyEntity::getCreatedBy).collect(Collectors.toSet());
+        Set<Integer> userSet = results.getResults().stream().map(SpecialAfterSaleApplyEntity::getCreatedBy).collect(Collectors.toSet());
         Map<Integer, UserGroupSimpleDTO> userGroupFromCache = userManager.searchUserGroupFromCache(userSet);
-        for (SpecialAfterSaleApplyRecordVO apply : applyRecords) {
+        for (SpecialAfterSaleApplyRecordVO apply : applyList) {
             UserGroupSimpleDTO userGroup = userGroupFromCache.get(apply.getUserId());
             if (userGroup == null) {
                 throw new GlobalRuntimeException(ResponseCode.ERROR.getCode(), "申请人编号" + apply.getUserId() + "无法找到");
@@ -442,13 +511,43 @@ public class SpecialAfterSaleServiceImpl implements SpecialAfterSaleService {
                 apply.setDeptNo(userGroup.getGroups().get(0).getGroupId());
             }
         }
-        return applyRecords;
+        return applyList;
     }
 
     @Override
-    public List<SpecialAfterSaleApplyRecordVO> exportAfterSaleApplyList(SpecialAfterSaleApplyExportRequest req) {
-        List<SpecialAfterSaleApplyEntity> results = specialAfterSaleApplyRepository.queryAllAfterSaleList(req);
-        return queryUserIdByGroup(results);
+    public void exportAllAfterSale(HttpServletResponse response) {
+
+        // TODO 需要确定审批编号是哪一个字段
+        ExcelWriter excelWriter = null;
+        ServletOutputStream out = null;
+        QSpecialAfterSaleApplyEntity applyEntity = QSpecialAfterSaleApplyEntity.specialAfterSaleApplyEntity;
+        QueryResults<SpecialAfterSaleApplyEntity> results = queryFactory.selectFrom(applyEntity)
+                .orderBy(applyEntity.id.asc())
+                .fetchResults();
+        List<SpecialAfterSaleApplyRecordVO> applyList = queryUserIdByGroup(results);
+        try {
+            out = response.getOutputStream();
+            response.setContentType("multipart/form-data");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(EXCEL_NAME, "UTF-8") + FILE_TYPE);
+            EasyExcelFactory.write(out, SpecialAfterSaleApplyRecordVO.class)
+                    .sheet(0, EXCEL_NAME)
+                    .doWrite(applyList);
+            // 千万别忘记finish 会帮忙关闭流
+            if (excelWriter != null) {
+                excelWriter.finish();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     /**
@@ -512,7 +611,12 @@ public class SpecialAfterSaleServiceImpl implements SpecialAfterSaleService {
         // 更新审批表状态为取消
         SpecialAfterSaleApplyEntity entity = specialAfterSaleApplyRepository.findById(applyId)
                 .orElseThrow(() -> new GlobalRuntimeException(ResponseCode.CONDITION_EXECUTE_ERROR.getCode(), "查询不到该申请详情"));
-        specialAfterSaleApplyRepository.updateAfterSaleApplyStatus(SpecialAfterSaleApplyStatusEnum.UNDO.getCode(),applyId);
+        QSpecialAfterSaleApplyEntity applyEntity = QSpecialAfterSaleApplyEntity.specialAfterSaleApplyEntity;
+        queryFactory.update(applyEntity)
+                .set(applyEntity.status, SpecialAfterSaleApplyStatusEnum.UNDO.getCode())
+                .set(applyEntity.lastUpdateAt, LocalDateTime.now())
+                .set(applyEntity.lastUpdateBy, userId)
+                .execute();
         // 插入日志信息
         specialAfterSaleLogManager.createActionLog(applyId, SpecialAfterSaleLogActionEnum.CANCEL.getValue(), null,
                 SpecialAfterSaleLogActionEnum.CANCEL.getCode(), null, YesOrNoEnum.YES.getCode(), userId);
