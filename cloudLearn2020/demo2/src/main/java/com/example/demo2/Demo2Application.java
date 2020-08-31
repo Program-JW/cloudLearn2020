@@ -9,9 +9,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class Demo2Application {
 
     public static void main(String[] args) {
-        System.out.println(181123);
-        System.out.println(456);
-        System.out.println(193);
+        System.out.println("main");
         SpringApplication.run(Demo2Application.class, args);
     }
 
