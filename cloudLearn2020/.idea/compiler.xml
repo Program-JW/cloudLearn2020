@@ -7,10 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="demo-zuul" />
-        <module name="demo2" />
-        <module name="demo2-copy" />
         <module name="demo-feign" />
+        <module name="demo2-copy" />
+        <module name="demo2" />
+        <module name="demo-zuul" />
         <module name="cloud-eureka-server7001" />
       </profile>
     </annotationProcessing>
